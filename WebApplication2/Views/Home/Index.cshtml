@@ -1,0 +1,146 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<div class="jumbotron">
+    @*There's no validation given!, please use valid values..*@
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<div class="row">
+    <label>Application ID</label>
+
+    <input type="text" id="applicationId" class="btn btn-default" value="" />
+    <br/>
+    <label>type</label>
+
+    <input type="text" id="type" class="btn btn-default" value="" />
+    <br />
+    <label>Summary</label>
+
+    <input type="text" id="summary" class="btn btn-default" value="" />
+    <br/>
+
+    <label>Amount</label>
+
+    <input type="text"  id="amount" class="btn btn-default" value="" />
+    <br />
+    <label>Posting date</label>
+
+    <input type="datetime" disabled="disabled" id="postingDate" class="btn btn-default" value="@DateTime.Now" />
+    <br/>
+    <label>Iscleared</label>
+
+    <input type="text" id="isCleared" class="btn btn-default" value="" />
+    
+    <br />
+    <label>cleared date</label>
+
+    <input type="datetime" id="clearedDate" disabled="disabled" class="btn btn-default" value="@DateTime.Now" />
+    <br/>
+    <input type="button" id="submit" class="" value="Submit"/>
+    <br/> 
+    <input type="button" id="getAll" class="" value="GetAll" />
+    <br/>
+    <input type="button" id="delete" class="" value="Delete" />
+    
+</div>
+<div>
+    <label> Retrieved Data
+    @if (@ViewData["id"] != null)
+    {
+    <label>@ViewData["type"]</label>
+        <label>@ViewData["id"]</label>
+    }
+        @*@{
+            if (TempData["ToShow"] != null)
+            {
+                <text>@ViewData["type"]</text>
+                <text>@ViewData["id"]</text>
+
+    }
+
+}*@
+    </label>
+   
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#submit').click(function () {
+           
+            var applicationId = $('#applicationId').val();
+            var type = $('#type').val();
+            var summary = $('#summary').val();
+            var amount = $('#amount').val();
+            var postingDate = $('#postingDate').val();
+            var isClear = $('#isClear').val();
+            var clearDate = $('#clearDate').val();
+
+            $.ajax({
+                url: "Post",
+                type: "POST",
+                //contentType: "application/json; charset=utf-8",
+                //dataType: "json,                
+                data: {
+                    applicationId: applicationId, type: type, summary: summary, amount: amount, isClear: true
+                },
+                success: function(){
+                    alert("success");
+                }
+            });
+        });
+        $('#getAll').click(function () {
+            //alert();
+            var applicationId = $('#applicationId').val();
+            var type = $('#type').val();
+            var summary = $('#summary').val();
+            var amount = $('#amount').val();
+            var postingDate = $('#postingDate').val();
+            var isClear = $('#isClear').val();
+            var clearDate = $('#clearDate').val();
+
+            $.ajax({
+                url: "Get",
+                type: "GET",
+                //contentType: "application/json; charset=utf-8",
+                //dataType: "json,                
+                data: {
+                    getAll: true, applicationId: applicationId, type: type
+                },
+                success: function(data){
+                    alert("success");
+
+                }
+            });
+        });
+        $('#delete').click(function () {
+            //alert();
+            var applicationId = $('#applicationId').val();
+            var type = $('#type').val();
+            var summary = $('#summary').val();
+            var amount = $('#amount').val();
+            var postingDate = $('#postingDate').val();
+            var isClear = $('#isClear').val();
+            var clearDate = $('#clearDate').val();
+
+            $.ajax({
+                url: "delete",
+                type: "DELETE",
+                //contentType: "application/json; charset=utf-8",
+                //dataType: "json,                
+                data: {
+                    applicationId: applicationId
+                },
+                success: function () {
+                    alert("success");
+
+                }
+            });
+        });
+
+    });
+
+   
+</script>
+
